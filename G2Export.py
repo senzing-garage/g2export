@@ -14,7 +14,7 @@ from datetime import datetime
 import G2Paths
 from G2Health import G2Health
 
-from senzing import G2Engine, G2EngineFlags, G2Exception, G2IniParams, G2ModuleException
+from senzing import G2Engine, G2EngineFlags, G2IniParams, G2ModuleException
 
 def print_error_msg(msg, error1, error2='', exit=False):
     ''' Display error msg and optionally exit '''
@@ -345,7 +345,7 @@ if __name__ == '__main__':
                  ********** Warning **********
 
                  G2Export isn't intended for exporting large numbers of entities and associated data source record information.
-                 Beyond 100M+ data source records isn't suggested. For exporting overview entity and relationship data for 
+                 Beyond 100M+ data source records isn't suggested. For exporting overview entity and relationship data for
                  analytical purposes outside of Senzing please review the following article:
 
                  https://senzing.zendesk.com/hc/en-us/articles/360010716274--Advanced-Replicating-the-Senzing-results-to-a-Data-Warehouse
