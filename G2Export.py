@@ -360,17 +360,16 @@ if __name__ == '__main__':
         # Some CSV exports can be large especially with extended data. Is checked and increased in csv_fetch_next()
         csv.field_size_limit(300000)
 
-        # Extended format (with REF_SCORE, ENTITY_TYPE, ERRULE_CODE) hard coded to false for now. Applies to CSV output
+        # Extended format (with ENTITY_TYPE, ERRULE_CODE) hard coded to false for now. Applies to CSV output
         extendedFormat = False
 
         # Fields to use with CSV output, list of fields to request data
         # For CSV these are unioned with the data returned by the flags to give final output
-        csvFields = ['RESOLVED_ENTITY_ID', 'RELATED_ENTITY_ID', 'MATCH_LEVEL', 'MATCH_KEY', 'DATA_SOURCE', 'RECORD_ID', 'LENS_CODE']
+        csvFields = ['RESOLVED_ENTITY_ID', 'RELATED_ENTITY_ID', 'MATCH_LEVEL', 'MATCH_KEY', 'DATA_SOURCE', 'RECORD_ID']
         if args.extended:
             csvFields.insert(2, 'RESOLVED_ENTITY_NAME')
             csvFields.insert(6, 'JSON_DATA')
         if extendedFormat:  # Hard coded to false for now
-            csvFields.append('REF_SCORE')
             csvFields.append('ENTITY_TYPE')
             csvFields.append('ERRULE_CODE')
         csvFields = ','.join(csvFields)
