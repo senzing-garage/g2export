@@ -1,0 +1,20 @@
+[pylint]
+disable=
+	consider-using-with,
+	import-error,
+	invalid-name,
+	missing-module-docstring,
+	redefined-builtin,
+	redefined-outer-name,
+	unspecified-encoding,
+    broad-except,
+    consider-using-f-string,
+    line-too-long,
+    too-many-branches,
+    too-many-locals,
+good-names=
+    template-python
+ignore=
+    __init__.py,
+notes=
+    FIXME,
