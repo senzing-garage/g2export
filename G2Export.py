@@ -389,7 +389,7 @@ if __name__ == '__main__':
 
         # Get the INI parameters to use
         iniParamCreator = G2IniParams()
-        
+
         if args.ini_file_name:
 
             g2module_params = iniParamCreator.getJsonINIParams(args.ini_file_name)
@@ -400,7 +400,7 @@ if __name__ == '__main__':
 
         else:
 
-             g2module_params = iniParamCreator.getJsonINIParams(iniFileName)
+            g2module_params = iniParamCreator.getJsonINIParams(iniFileName)
 
 
         # Initialise an engine
