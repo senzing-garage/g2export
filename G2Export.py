@@ -4,6 +4,7 @@ import argparse
 import contextlib
 import csv
 import gzip
+import os
 import pathlib
 import subprocess
 import sys
@@ -212,7 +213,7 @@ if __name__ == '__main__':
     }
 
     g2export_parser = argparse.ArgumentParser(formatter_class=argparse.RawTextHelpFormatter, allow_abbrev=False)
-    g2export_parser.add_argument('-c', '--iniFile', default=None, nargs=1, help=textwrap.dedent('''\
+    g2export_parser.add_argument('-c', '--iniFile', dest='ini_file_name', default=None, nargs=1, help=textwrap.dedent('''\
 
                                                                                         Path and file name of optional G2Module.ini to use.
 
@@ -377,18 +378,26 @@ if __name__ == '__main__':
 
         # Check G2Project.ini isn't being used, now deprecated
         # Don't try and auto find G2Module.ini, safer to ask to be specified during this change!
-        if args.iniFile and 'G2PROJECT.INI' in args.iniFile[0].upper():
+        if args.ini_file_name and 'G2PROJECT.INI' in args.ini_file_name[0].upper():
             print('\nINFO: G2Export no longer uses G2Project.ini, it is deprecated and uses G2Module.ini instead.', file=msg_output_handle)
             print('      G2Export attempts to locate a default G2Module.ini (no -c) or use -c to specify path/name to your G2Module.ini', file=msg_output_handle)
             sys.exit(0)
 
-        # If ini file isn't specified try and locate it with G2Paths
-        iniFileName = pathlib.Path(G2Paths.get_G2Module_ini_path()) if not args.iniFile else pathlib.Path(args.iniFile[0]).resolve()
-        G2Paths.check_file_exists_and_readable(iniFileName)
+    #Check if INI file or env var is specified, otherwise use default INI file
+    iniFileName = None
 
-        # Get the INI parameters to use
+    if args.ini_file_name:
+        iniFileName = pathlib.Path(args.ini_file_name[0])
+    elif os.getenv("SENZING_ENGINE_CONFIGURATION_JSON"):
+        g2module_params = os.getenv("SENZING_ENGINE_CONFIGURATION_JSON")
+    else:
+        iniFileName = pathlib.Path(G2Paths.get_G2Module_ini_path())
+
+    if iniFileName:
+        G2Paths.check_file_exists_and_readable(iniFileName)
         iniParamCreator = G2IniParams()
         g2module_params = iniParamCreator.getJsonINIParams(iniFileName)
+
 
         # Initialise an engine
         try:
