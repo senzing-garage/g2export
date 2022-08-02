@@ -383,24 +383,20 @@ if __name__ == '__main__':
             print('      G2Export attempts to locate a default G2Module.ini (no -c) or use -c to specify path/name to your G2Module.ini', file=msg_output_handle)
             sys.exit(0)
 
-        # If ini file isn't specified try and locate it with G2Paths
+    #Check if INI file or env var is specified, otherwise use default INI file
+    iniFileName = None
+
+    if args.ini_file_name:
+        iniFileName = pathlib.Path(args.ini_file_name[0])
+    elif os.getenv("SENZING_ENGINE_CONFIGURATION_JSON"):
+        g2module_params = os.getenv("SENZING_ENGINE_CONFIGURATION_JSON")
+    else:
         iniFileName = pathlib.Path(G2Paths.get_G2Module_ini_path())
+
+    if iniFileName:
         G2Paths.check_file_exists_and_readable(iniFileName)
-
-        # Get the INI parameters to use
         iniParamCreator = G2IniParams()
-
-        if args.ini_file_name:
-
-            g2module_params = iniParamCreator.getJsonINIParams(args.ini_file_name)
-
-        elif os.getenv('SENZING_ENGINE_CONFIGURATION_JSON'):
-
-            g2module_params = os.getenv('SENZING_ENGINE_CONFIGURATION_JSON')
-
-        else:
-
-            g2module_params = iniParamCreator.getJsonINIParams(iniFileName)
+        g2module_params = iniParamCreator.getJsonINIParams(iniFileName)
 
 
         # Initialise an engine
