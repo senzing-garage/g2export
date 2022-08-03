@@ -14,7 +14,7 @@ from datetime import datetime
 
 import G2Paths
 
-from senzing import G2Engine, G2EngineFlags, G2ModuleException
+from senzing import G2Engine, G2EngineFlags, G2Exception
 from G2IniParams import G2IniParams
 
 
