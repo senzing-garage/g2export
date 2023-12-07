@@ -12,6 +12,7 @@ disable=
     too-many-branches,
     too-many-locals,
     unspecified-encoding,
+    used-before-assignment,
 good-names=
     template-python
 ignore=
